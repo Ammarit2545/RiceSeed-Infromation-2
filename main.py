@@ -11,6 +11,7 @@ from pytz import timezone
 #import jwt
 from flask import Flask, request, jsonify
 from werkzeug.urls import quote
+import os
 
 #Model
 from models.rice_informations import RiceInformation
@@ -750,7 +751,23 @@ def logincheck():
         return jsonify({"error": "An error occurred while processing the request"}), 500
 
 if __name__ == "__main__":
-    csv_file_path = r"F:\RiceSeed-Manager-main\CSV\37176ff3-dd70-4f1f-8e1d-83eda3cf77e4.csv"
+
+
+    # ระบุตำแหน่งที่อยู่ปัจจุบันของโปรเจ็ค
+    current_directory = os.getcwd()
+
+    # ระบุเส้นทางไปยังไฟล์ CSV
+    relative_path = os.path.join("CSV", "37176ff3-dd70-4f1f-8e1d-83eda3cf77e4.csv")
+
+    # รับเส้นทางปัจจุบันของโปรเจ็ค
+    current_directory = os.getcwd()
+
+    # รวมเส้นทางไปยังไฟล์ CSV
+    csv_file_path = os.path.join(current_directory, relative_path)
+
+    print("Expected CSV file path:", csv_file_path)
+
+    #csv_file_path = r"F:\RiceSeed-Manager-main\CSV\37176ff3-dd70-4f1f-8e1d-83eda3cf77e4.csv"
     try :
         import_csv_to_mongodb(csv_file_path)
     except:
